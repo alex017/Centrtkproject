@@ -30,30 +30,47 @@ public class IpAdress {
 		return ipAdress;
 	}
 	
-	int levelOfNotEq(int[] ip1, int[] ip2){
-		
-		return 0;
+	/*String ip1 = "192.168.1.112";
+	String ip2 = "192.168.4.5";
+	IpAdress ipAd = new IpAdress(ip1, ip2);
+	private void swapIps(){ // swap 2 ip's 
+		int[] ip = new int[4];
+		ip = this.ipadress1;
+		this.ipadress1 = this.ipadress2;
+		this.ipadress2 = ip;
+	}
+	*/
+	int levelOfNotEq(int[] ip1, int[] ip2){ // the level in ip, started from the top,
+											// where 2 ip adresse's are not equal
+											// if they are equal then return 0 and 4 if equal
+		for (int i = 0; i<4; i++){
+			if (ip1[i] != ip2[i]){
+				/*if (ip1[i] < ip2[i]){
+					swapIps();
+				}
+				*/
+				return i;
+			}
+		}
+		return 4;
 	}
 	
 	private void diaposon(int[] ip1, int ip2[]){
 				
 	}
 		
-	IpAdress(String ip1, String ip2){
+	IpAdress(String ip1, String ip2) throws NotValidIpException{
 		// split ip adresse's by dots
 		String[] ipAdress1 = this.splitIpAdress(ip1); 
 		String[] ipAdress2 = this.splitIpAdress(ip2);
-		try{
-			// trying to transform ip int[] from String[]
-			// we do validation in transformation time
-			this.ipadress1 = getIpAdressInInt(ipAdress1);
-			this.ipadress2 = getIpAdressInInt(ipAdress2);
-		}
-		catch(NotValidIpException e){}
-		finally {}
+		// trying to transform ip int[] from String[]
+		// we do validation in transformation time
+		this.ipadress1 = getIpAdressInInt(ipAdress1);
+		this.ipadress2 = getIpAdressInInt(ipAdress2);
 		for (int i = 0; i<4; i++){
 			System.out.println(this.ipadress2[i]);
 		}
+		System.out.println(this.levelOfNotEq(this.ipadress1, this.ipadress2));
 		
 	}
 
@@ -63,7 +80,12 @@ public class IpAdress {
 			System.out.println("Should be 2 ip adresses");
 			return;
 		}
-		IpAdress ad = new IpAdress(args[0], args[1]);
+		try {
+			IpAdress ad = new IpAdress(args[0], args[1]);
+		} catch (NotValidIpException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
