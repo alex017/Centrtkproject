@@ -1,6 +1,7 @@
 package ipAdress;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -30,24 +31,25 @@ public class IpAdressTest {
 	}
 	
 	@Test
-	public void testLevelOfNotEq(){
-		int[] ipInt1 = {192, 168, 1, 112};
-		int[] ipInt2 = {192, 168, 4, 5}; 
-		Assert.assertEquals(2,ipAd.levelOfNotEq(ipInt1, ipInt2));
+	public void testLevelOfNotEq() throws NotValidIpException{
+		String ipInt1 = "192.168.1.112";
+		String ipInt2 = "192.168.4.5"; 
+		Assert.assertEquals(2,new IpAdress(ipInt1,ipInt2).levelOfNotEq());
+	}
+	
+	
+	@Test
+	public void testLevelOfNotEqWhenEq() throws NotValidIpException{
+		String ipInt1 = "192.168.1.112";
+		String ipInt2 = "192.168.1.112"; 
+		Assert.assertEquals(4,new IpAdress(ipInt1,ipInt2).levelOfNotEq());
 	}
 	
 	@Test
-	public void testLevelOfNotEqWhenEq(){
-		int[] ipInt1 = {192, 168, 1, 112};
-		int[] ipInt2 = {192, 168, 1, 112}; 
-		Assert.assertEquals(4,ipAd.levelOfNotEq(ipInt1, ipInt2));
-	}
-	
-	@Test
-	public void testLevelOfNotEqWhenNotEqAtAll(){
-		int[] ipInt1 = {172, 168, 1, 112};
-		int[] ipInt2 = {192, 168, 1, 112}; 
-		Assert.assertEquals(0,ipAd.levelOfNotEq(ipInt1, ipInt2));
+	public void testLevelOfNotEqWhenNotEqAtAll() throws NotValidIpException{
+		String ipInt1 = "172.68.1.112";
+		String ipInt2 = "192.168.1.112"; 
+		Assert.assertEquals(0,new IpAdress(ipInt1,ipInt2).levelOfNotEq());
 	}
 	
 	@Test(expected = NotValidIpException.class)

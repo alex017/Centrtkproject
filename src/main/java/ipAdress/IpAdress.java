@@ -40,11 +40,11 @@ public class IpAdress {
 		this.ipadress2 = ip;
 	}
 	*/
-	int levelOfNotEq(int[] ip1, int[] ip2){ // the level in ip, started from the top,
+	int levelOfNotEq(){ // the level in ip, started from the top,
 											// where 2 ip adresse's are not equal
 											// if they are equal then return 0 and 4 if equal
 		for (int i = 0; i<4; i++){
-			if (ip1[i] != ip2[i]){
+			if (this.ipadress1[i] != this.ipadress2[i]){
 				/*if (ip1[i] < ip2[i]){
 					swapIps();
 				}
@@ -56,7 +56,7 @@ public class IpAdress {
 	}
 	
 	private void diaposon(int[] ip1, int ip2[]){
-				
+		int levelWhereNotEqual = levelOfNotEq();
 	}
 		
 	IpAdress(String ip1, String ip2) throws NotValidIpException{
@@ -70,7 +70,7 @@ public class IpAdress {
 		for (int i = 0; i<4; i++){
 			System.out.println(this.ipadress2[i]);
 		}
-		System.out.println(this.levelOfNotEq(this.ipadress1, this.ipadress2));
+		//System.out.println(this.levelOfNotEq(this.ipadress1, this.ipadress2));
 		
 	}
 
