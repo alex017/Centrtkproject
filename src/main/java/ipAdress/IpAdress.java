@@ -30,33 +30,74 @@ public class IpAdress {
 		return ipAdress;
 	}
 	
-	/*String ip1 = "192.168.1.112";
-	String ip2 = "192.168.4.5";
-	IpAdress ipAd = new IpAdress(ip1, ip2);
-	private void swapIps(){ // swap 2 ip's 
+	private void swapIps(){ // swap ip's, if 2-nd ip bigger 
 		int[] ip = new int[4];
 		ip = this.ipadress1;
 		this.ipadress1 = this.ipadress2;
 		this.ipadress2 = ip;
 	}
-	*/
+	
 	int levelOfNotEq(){ // the level in ip, started from the top,
 											// where 2 ip adresse's are not equal
-											// if they are equal then return 0 and 4 if equal
+											// if they are equal then return 4
 		for (int i = 0; i<4; i++){
 			if (this.ipadress1[i] != this.ipadress2[i]){
-				/*if (ip1[i] < ip2[i]){
-					swapIps();
-				}
-				*/
+				if (this.ipadress1[i] > this.ipadress2[i]) swapIps();
 				return i;
 			}
 		}
 		return 4;
 	}
 	
-	private void diaposon(int[] ip1, int ip2[]){
+	private void printIp(int[] ipForPrint){ //print ip 
+		for (int i = 0; i<3; i++){
+			System.out.print(ipForPrint[i]+".");
+		}
+		System.out.println(ipForPrint[3]);
+	}
+	
+	private void populateToEnd(int[] ipForPrint){// populate lower level of ip to 255
+		populate(ipForPrint, 255);
+	}
+	private void populate(int[] ipForPrint, int max){// populate lower level of ip to max
+		int i = 3;
+		while (ipForPrint[i] < max){
+			ipForPrint[i]++;
+			printIp(ipForPrint);
+		}
+		if (max == 255)	incHighLev(i,ipForPrint);
+	}
+	private void incHighLev(int level, int[] ipForPrint){//increasing higher level of ip
+		while (ipForPrint[level] == 255){
+			ipForPrint[level] = 0;
+			ipForPrint[--level]++;
+			printIp(ipForPrint);
+		}
+	}
+	
+	private void makeEqOnLevel(int levelWhereNotEqual,int[] ipForPrint){
+		// make ip equal on level
+		while (ipForPrint[levelWhereNotEqual] != this.ipadress2[levelWhereNotEqual]){
+			populateToEnd(ipForPrint);
+		}
+	}
+	
+	public void diaposon(){ // find and print diaposon
 		int levelWhereNotEqual = levelOfNotEq();
+		if (levelWhereNotEqual == 4) {System.out.println("Equal ip's");return;}
+		
+		int[] ipForPrint = this.ipadress1.clone();
+		while (levelWhereNotEqual != 3){// we do populate, untill high levels
+										// where was a different will be equal
+										// then increasing level, whcich mean 
+										// we go father in ip
+										// by this we take equality on all levels except
+										// the last one
+			makeEqOnLevel(levelWhereNotEqual, ipForPrint);
+			levelWhereNotEqual++; 
+		}
+		//populate the tail which is the lower level
+		populate(ipForPrint, this.ipadress2[3]-1);
 	}
 		
 	IpAdress(String ip1, String ip2) throws NotValidIpException{
@@ -67,15 +108,10 @@ public class IpAdress {
 		// we do validation in transformation time
 		this.ipadress1 = getIpAdressInInt(ipAdress1);
 		this.ipadress2 = getIpAdressInInt(ipAdress2);
-		for (int i = 0; i<4; i++){
-			System.out.println(this.ipadress2[i]);
-		}
-		//System.out.println(this.levelOfNotEq(this.ipadress1, this.ipadress2));
-		
 	}
 
 	public static void main(String[] args) {
-		// firstly need to be sure that had been sent 2 arguments 
+		/*// firstly need to be sure that had been sent 2 arguments 
 		if (args.length != 2){
 			System.out.println("Should be 2 ip adresses");
 			return;
@@ -85,7 +121,6 @@ public class IpAdress {
 		} catch (NotValidIpException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/				
 	}
-
 }

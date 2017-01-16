@@ -1,15 +1,14 @@
 package ipAdress;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.Mockito;
-
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 public class IpAdressTest {
-	String ip1 = "192.168.1.112";
-	String ip2 = "192.168.4.5";
+	String ip1 = "192.168.1.4";
+	String ip2 = "192.168.1.7";
 	IpAdress ipAd;
 	{		
 		try {
@@ -64,6 +63,18 @@ public class IpAdressTest {
 		ip1 = "192.168";
 		ip2 = "192.168.4";
 		IpAdress ipAdEx = new IpAdress(ip1, ip2);		
+	}
+	
+	@Test
+	public void testDiaposon(){
+		final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+	    System.setOut(new PrintStream(outContent));
+	    ipAd.diaposon();
+	    assertEquals("192.168.1.5\n"
+	    		+ "192.168.1.6\n", outContent.toString());	    
+		System.setOut(null);
+		
+
 	}
 	
 }
