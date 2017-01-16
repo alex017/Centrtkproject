@@ -17,8 +17,12 @@ public class IpAdress {
 		return (numericFromIp >= 0 && numericFromIp <= 255);
 	}
 	
-	int[] getIpAdressInInt(String[] ip) throws NotValidIpException{// get the ip[]
-		// from String[] with validation
+	/* get the ip[]
+	 * from String[] with validation
+	 * throw exception if not valid
+	 * @see NotValidException.class
+	 * */
+	int[] getIpAdressInInt(String[] ip) throws NotValidIpException{
 		int[] ipAdress = new int[4];
 		if (!validate(ip)) { throw new NotValidIpException("not valid ip,"
 				+ "ip has not right type "+ip);}
@@ -30,16 +34,22 @@ public class IpAdress {
 		return ipAdress;
 	}
 	
-	private void swapIps(){ // swap ip's, if 2-nd ip bigger 
+	/*
+	 * swap ip's, if 2-nd ip bigger
+	 */
+	private void swapIps(){  
 		int[] ip = new int[4];
 		ip = this.ipadress1;
 		this.ipadress1 = this.ipadress2;
 		this.ipadress2 = ip;
 	}
 	
-	int levelOfNotEq(){ // the level in ip, started from the top,
-											// where 2 ip adresse's are not equal
-											// if they are equal then return 4
+	/*
+	 * the level in ip, started from the top,
+	 * where 2 ip adresse's are not equal
+	 * if they are equal then return 4
+	 */
+	int levelOfNotEq(){ 
 		for (int i = 0; i<4; i++){
 			if (this.ipadress1[i] != this.ipadress2[i]){
 				if (this.ipadress1[i] > this.ipadress2[i]) swapIps();
@@ -49,17 +59,25 @@ public class IpAdress {
 		return 4;
 	}
 	
-	private void printIp(int[] ipForPrint){ //print ip 
+	/*
+	 * print ip
+	 */
+	private void printIp(int[] ipForPrint){  
 		for (int i = 0; i<3; i++){
 			System.out.print(ipForPrint[i]+".");
 		}
 		System.out.println(ipForPrint[3]);
 	}
-	
-	private void populateToEnd(int[] ipForPrint){// populate lower level of ip to 255
+	/*
+	 * populate lower level of ip to 255
+	 */
+	private void populateToEnd(int[] ipForPrint){
 		populate(ipForPrint, 255);
 	}
-	private void populate(int[] ipForPrint, int max){// populate lower level of ip to max
+	/*
+	 * populate lower level of ip to max
+	 */
+	private void populate(int[] ipForPrint, int max){
 		int i = 3;
 		while (ipForPrint[i] < max){
 			ipForPrint[i]++;
@@ -67,22 +85,32 @@ public class IpAdress {
 		}
 		if (max == 255)	incHighLev(i,ipForPrint);
 	}
-	private void incHighLev(int level, int[] ipForPrint){//increasing higher level of ip
+	/*
+	 * increasing higher level of ip
+	 * mean that after xxx.xxx.xxx.255 will be xxx.xxx.xxx+1.0
+	 */
+	private void incHighLev(int level, int[] ipForPrint){
 		while (ipForPrint[level] == 255){
 			ipForPrint[level] = 0;
 			ipForPrint[--level]++;
 			printIp(ipForPrint);
 		}
 	}
-	
+	/*
+	 * made numerics in one level equal
+	 * examle was 192.168.xxx.xxx and 192.200.xxx.xxx
+	 * will be print all ip's untll 192.200.0.0
+	 */
 	private void makeEqOnLevel(int levelWhereNotEqual,int[] ipForPrint){
 		// make ip equal on level
 		while (ipForPrint[levelWhereNotEqual] != this.ipadress2[levelWhereNotEqual]){
 			populateToEnd(ipForPrint);
 		}
 	}
-	
-	public void diaposon(){ // find and print diaposon
+	/*
+	 * find and print diaposon
+	 */
+	public void diaposon(){ 
 		int levelWhereNotEqual = levelOfNotEq();
 		if (levelWhereNotEqual == 4) {System.out.println("Equal ip's");return;}
 		
