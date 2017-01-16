@@ -3,7 +3,14 @@ package telephoneDirectory;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/*
+ * This class is the telephone directory
+ * conteine's names and phone numbers
+ * @author alexei
+ * @version 1.0
+ */
 public class TelephoneDirectory {
+	/* Information is store as a HashMap<name, phone's list> */
 	private HashMap<String, LinkedList<String>> telphoneDirectory = 
 			new HashMap<String, LinkedList<String>>();
 	
@@ -25,10 +32,16 @@ public class TelephoneDirectory {
 	
 	public TelephoneDirectory(){}
 	
+	/*
+	 * true if name exist in phone directory, otherwise false 
+	 */
 	public boolean isPersonExist(String name){
 		return telphoneDirectory.containsKey(name);
 	}
-	
+	/*
+	 * set new person to phone directory
+	 * or if exits already, then add just phone number's
+	 */
 	public void set(String name, LinkedList<String> telephones){
 		if (!isPersonExist(name)){
 			telphoneDirectory.put(name, telephones);
@@ -58,7 +71,10 @@ public class TelephoneDirectory {
 		}
 		return dir;
 	}
-	
+	/*
+	 * printing to the standard out stream
+	 * @param name 
+	 */
 	public void printFromDirectoryByName(String name){
 		System.out.print(toString(name));
 	}
